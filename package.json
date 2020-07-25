@@ -1,0 +1,23 @@
+{
+  "name": "nodeJsTraining",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "task1": "npx nodemon ./task1.1/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moodyfox124/nodeJsTraining.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moodyfox124/nodeJsTraining/issues"
+  },
+  "homepage": "https://github.com/moodyfox124/nodeJsTraining#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
