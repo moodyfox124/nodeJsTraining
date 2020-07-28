@@ -3,5 +3,5 @@
 Homework 1:
 
 - [x] Task 1.1
-- [ ] Task 1.2
-- [ ] Task 1.3
+- [x] Task 1.2
+- [x] Task 1.3
