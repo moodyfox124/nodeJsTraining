@@ -18,8 +18,28 @@ const removeFile = (path) => {
   }
 }
 
+const createDir = (path) => {
+  try {
+    if(!fs.existsSync(path)){
+      fs.mkdirSync(path, { recursive: true });
+      console.log(`Directory created.`);
+    } else {
+      console.log(`Directory already exists.`);
+    }
+  } catch (err) {
+    return console.error(`Error occurred while creating directory, path: ${path}.\n${err}`);
+  }
+
+}
+
+const receivePathToFile = (pathToFile) => {
+  const lastIndex = pathToFile.lastIndexOf('/');
+  return pathToFile.substring(0, lastIndex);
+}
+
 const readIntoRamTransformAndWrite = (readPath, writePath) => {
-  removeFile(writePath);
+  const directoryPath = receivePathToFile(writePath);
+  if (!!directoryPath) createDir(directoryPath);
   fs.readFile(readPath, { encoding: 'utf-8' }, (err, data) => {
     if (err) {
       return console.error(`Reading failed. ${err.message}`);
@@ -76,4 +96,4 @@ const readTransformAndWriteUsingPipelineByChunks = (readPath, writePath) => {
   });
 }
 
-export { readIntoRamTransformAndWrite, readTransformAndWriteUsingPipelineByChunks, removeFile }
+export { readIntoRamTransformAndWrite, readTransformAndWriteUsingPipelineByChunks, removeFile, receivePathToFile }
