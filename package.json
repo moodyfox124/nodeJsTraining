@@ -1,0 +1,30 @@
+{
+  "name": "nodejstraining",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx babel --delete-dir-on-start -d build --source-maps inline",
+    "task1": "npx nodemon --exec babel-node -- ./task1.1/index.js",
+    "task2": "npx nodemon --exec babel-node -- ./task1.2/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moodyfox124/nodeJsTraining.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moodyfox124/nodeJsTraining/issues"
+  },
+  "homepage": "https://github.com/moodyfox124/nodeJsTraining#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "csvtojson": "^2.0.10",
+    "nodemon": "^2.0.4"
+  }
+}
