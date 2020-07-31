@@ -1,6 +1,7 @@
 import fs from 'fs';
 import csv from 'csvtojson';
 import { pipeline } from 'stream';
+import readline from 'readline';
 
 const removeFile = (path) => {
   try {
@@ -20,7 +21,7 @@ const removeFile = (path) => {
 
 const createDir = (path) => {
   try {
-    if(!fs.existsSync(path)){
+    if (!fs.existsSync(path)) {
       fs.mkdirSync(path, { recursive: true });
       console.log(`Directory created.`);
     } else {
@@ -40,6 +41,7 @@ const receivePathToFile = (pathToFile) => {
 const readIntoRamTransformAndWrite = (readPath, writePath) => {
   const directoryPath = receivePathToFile(writePath);
   if (!!directoryPath) createDir(directoryPath);
+  removeFile(writePath);
   fs.readFile(readPath, { encoding: 'utf-8' }, (err, data) => {
     if (err) {
       return console.error(`Reading failed. ${err.message}`);
@@ -64,6 +66,8 @@ const readIntoRamTransformAndWrite = (readPath, writePath) => {
 }
 
 const readTransformAndWriteUsingPipelineByChunks = (readPath, writePath) => {
+  const directoryPath = receivePathToFile(writePath);
+  if (!!directoryPath) createDir(directoryPath);
   const readStream = fs.createReadStream(readPath, { encoding: 'utf-8' });
   const writeStream = fs.createWriteStream(writePath, { encoding: 'utf-8' });
   pipeline(
@@ -96,4 +100,33 @@ const readTransformAndWriteUsingPipelineByChunks = (readPath, writePath) => {
   });
 }
 
-export { readIntoRamTransformAndWrite, readTransformAndWriteUsingPipelineByChunks, removeFile, receivePathToFile }
+const readTransformAndWriteLineByLine = (readPath, writePath) => {
+  const directoryPath = receivePathToFile(writePath);
+  if (!!directoryPath) createDir(directoryPath);
+  let agregatedData = '';
+  const readStream = fs.createReadStream(readPath, { encoding: 'utf-8' });
+  const readlineInterface = readline.createInterface({
+    input: readStream
+  });
+  readlineInterface.on('line', (data) => {
+    agregatedData += data + '\n';
+  });
+  readlineInterface.on('close', () => {
+    csv()
+      .on("error", (err) => {
+        console.error(`Converting failed.\n${err.message}`);
+      })
+      .fromString(agregatedData)
+      .then((json) => {
+        json.forEach((obj) => {
+          const data = JSON.stringify(obj) + '\n';
+          fs.writeFile(writePath, data, { flag: 'a' }, (err) => {
+            if (err) return console.error(`Writing failed.\n${err.message}`);
+          });
+        });
+        console.log(`Writing ended.`);
+      })
+  })
+}
+
+export { readIntoRamTransformAndWrite, readTransformAndWriteUsingPipelineByChunks, removeFile, receivePathToFile, readTransformAndWriteLineByLine }
