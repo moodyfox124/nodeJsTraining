@@ -2,14 +2,15 @@ import fs from 'fs';
 import csv from 'csvtojson';
 import { pipeline } from 'stream';
 import readline from 'readline';
+import path from 'path';
 
-const removeFile = (path) => {
+const removeFile = (pathToFile) => {
   try {
-    if (fs.existsSync(path)) {
+    if (fs.existsSync(pathToFile)) {
       try {
-        console.log(`File ${path} exists.`);
-        fs.unlinkSync(path);
-        console.log(`${path} was deleted`);
+        console.log(`File ${pathToFile} exists.`);
+        fs.unlinkSync(pathToFile);
+        console.log(`${pathToFile} was deleted`);
       } catch (err) {
         return console.error(`Deleting failed.\n${err.message}`);
       }
@@ -19,27 +20,38 @@ const removeFile = (path) => {
   }
 }
 
-const createDir = (path) => {
+const createDir = (dirPath) => {
   try {
-    if (!fs.existsSync(path)) {
-      fs.mkdirSync(path, { recursive: true });
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
       console.log(`Directory created.`);
     } else {
       console.log(`Directory already exists.`);
     }
   } catch (err) {
-    return console.error(`Error occurred while creating directory, path: ${path}.\n${err}`);
+    return console.error(`Error occurred while creating directory, path: ${dirPath}.\n${err}`);
   }
-
 }
 
-const receivePathToFile = (pathToFile) => {
-  const lastIndex = pathToFile.lastIndexOf('/');
-  return pathToFile.substring(0, lastIndex);
+const removePropertyFromObject = (targetObject, removedPromerty) => {
+  const modifiedObject = {};
+  for (const property in targetObject) {
+    if (property === removedPromerty) continue;
+    modifiedObject[property] = targetObject[property];
+  }
+  return modifiedObject;
+}
+
+const lowerCaseObjectProperties = (targetObject) => {
+  const modifiedObject = {};
+  for (const property in targetObject) {
+    modifiedObject[property.toLowerCase()] = targetObject[property];
+  }
+  return modifiedObject;
 }
 
 const readIntoRamTransformAndWrite = (readPath, writePath) => {
-  const directoryPath = receivePathToFile(writePath);
+  const directoryPath = path.dirname(writePath);
   if (!!directoryPath) createDir(directoryPath);
   removeFile(writePath);
   fs.readFile(readPath, { encoding: 'utf-8' }, (err, data) => {
@@ -55,7 +67,9 @@ const readIntoRamTransformAndWrite = (readPath, writePath) => {
       .fromString(readedFullyFile)
       .then((json) => {
         json.forEach((obj) => {
-          const data = JSON.stringify(obj) + '\n';
+          const objectWithLowerCaseProperties = lowerCaseObjectProperties(obj);
+          const objectWithRemoverProperty = removePropertyFromObject(objectWithLowerCaseProperties, 'amount');
+          const data = JSON.stringify(objectWithRemoverProperty) + '\n';
           fs.writeFile(writePath, data, { flag: 'a' }, (err) => {
             if (err) return console.error(`Writing failed.\n${err.message}`);
           });
@@ -65,14 +79,25 @@ const readIntoRamTransformAndWrite = (readPath, writePath) => {
   });
 }
 
+function modifyJson(json) {
+  Object.entries(json)
+    .reduce((t, [key, value]) => {
+      if (key !== 'Amount')
+        json[key.toLowerCase()] = value;
+      delete json[key];
+    }, {});
+}
+
 const readTransformAndWriteUsingPipelineByChunks = (readPath, writePath) => {
-  const directoryPath = receivePathToFile(writePath);
+  const directoryPath = path.dirname(writePath);
   if (!!directoryPath) createDir(directoryPath);
   const readStream = fs.createReadStream(readPath, { encoding: 'utf-8' });
   const writeStream = fs.createWriteStream(writePath, { encoding: 'utf-8' });
   pipeline(
     readStream,
-    csv(),
+    csv().subscribe((data) => {
+      modifyJson(data);
+    }),
     writeStream,
     (err) => {
       if (err) {
@@ -85,24 +110,21 @@ const readTransformAndWriteUsingPipelineByChunks = (readPath, writePath) => {
 
   readStream.on('close', () => {
     console.log(`Reading for readable stream ended.`)
-  });
-
-  readStream.on('error', (err) => {
+  }).on('error', (err) => {
     return console.error(`> Error occurred while creating readable stream.\n${err.message}`);
   });
 
   writeStream.on('close', () => {
     console.log(`Writing for writable stream ended.`)
-  });
-
-  writeStream.on('error', (err) => {
+  }).on('error', (err) => {
     return console.error(`> Error occurred while creating writable stream.\n${err.message}`);
   });
 }
 
 const readTransformAndWriteLineByLine = (readPath, writePath) => {
-  const directoryPath = receivePathToFile(writePath);
+  const directoryPath = path.dirname(writePath);
   if (!!directoryPath) createDir(directoryPath);
+  removeFile(writePath);
   let agregatedData = '';
   const readStream = fs.createReadStream(readPath, { encoding: 'utf-8' });
   const readlineInterface = readline.createInterface({
@@ -119,7 +141,9 @@ const readTransformAndWriteLineByLine = (readPath, writePath) => {
       .fromString(agregatedData)
       .then((json) => {
         json.forEach((obj) => {
-          const data = JSON.stringify(obj) + '\n';
+          const objectWithLowerCaseProperties = lowerCaseObjectProperties(obj);
+          const objectWithRemoverProperty = removePropertyFromObject(objectWithLowerCaseProperties, 'amount');
+          const data = JSON.stringify(objectWithRemoverProperty) + '\n';
           fs.writeFile(writePath, data, { flag: 'a' }, (err) => {
             if (err) return console.error(`Writing failed.\n${err.message}`);
           });
@@ -129,4 +153,4 @@ const readTransformAndWriteLineByLine = (readPath, writePath) => {
   })
 }
 
-export { readIntoRamTransformAndWrite, readTransformAndWriteUsingPipelineByChunks, removeFile, receivePathToFile, readTransformAndWriteLineByLine }
+export { readIntoRamTransformAndWrite, readTransformAndWriteUsingPipelineByChunks, removeFile, readTransformAndWriteLineByLine }

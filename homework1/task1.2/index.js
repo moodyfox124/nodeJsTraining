@@ -1,10 +1,11 @@
 
 import { readIntoRamTransformAndWrite, readTransformAndWriteUsingPipelineByChunks, readTransformAndWriteLineByLine } from './support/fileOperations';
+import path from 'path';
 
-const pathToCsv = './csv/example.csv';
-const outFile = __dirname + '/txt/csvOutput.txt';
-const outFileFullyLoadedIntoRam = __dirname + '/txt/csvOutputFullyIntoRam.txt';
-const outFileFullyLoadedLineByLine = __dirname + '/txt/csvOutputLoadedLineByLine.txt'
+const pathToCsv = path.join('.', '/csv/example.csv');
+const outFile = path.join(__dirname, '/txt/csvOutput.txt');
+const outFileFullyLoadedIntoRam = path.join(__dirname, '/txt/csvOutputFullyIntoRam.txt');
+const outFileFullyLoadedLineByLine = path.join(__dirname, '/txt/csvOutputLoadedLineByLine.txt');
 
 readIntoRamTransformAndWrite(pathToCsv, outFileFullyLoadedIntoRam);
 
