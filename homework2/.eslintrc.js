@@ -1,5 +1,5 @@
-{
-    "parser": "babel-eslint",
+module.exports = {
+    "parser": "@babel/eslint-parser",
     "plugins": [
     ],
     "env": {
@@ -225,7 +225,7 @@
             {
                 "ignoreUrls": true,
                 "ignoreComments": false,
-                "ignorePattern": "^\\s*(const|let|var)\\s+\\w+\\s+\\=\\s+\\/.*\\/(|i|g|m|ig|im|gm|igm);?$"
+                "ignorePattern": "^\s*(const|let|var)\s+\w+\s+\=\s+\/.*\/(|i|g|m|ig|im|gm|igm);?$"
             }
         ],
         "max-nested-callbacks": [
