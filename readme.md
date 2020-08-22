@@ -8,5 +8,5 @@ Homework 1:
 
 Homework 2:
 
-- [ ] Task 2.1
-- [ ] Task 2.2
+- [x] Task 2.1
+- [x] Task 2.2
