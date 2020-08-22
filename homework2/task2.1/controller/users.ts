@@ -43,10 +43,10 @@ const getUser = (req, res) => {
     !Number.isInteger(Number(query.limit)) ||
     Number(query.limit) < 0
     ) {
-        return res.send('Property limit should be Integer and not less than 0.');
+        return res.status(400).send('Property limit should be Integer and not less than 0.');
     }
     if (!query.login) {
-        return res.send('Property login should be in the query and have a value.');
+        return res.status(400).send('Property login should be in the query and have a value.');
     }
     const responseData = getAutoSuggestUsers(
         String(query.login),
@@ -59,7 +59,7 @@ const createUser = (req, res) => {
     const user = req.body;
     const dataKeys = Object.keys(user);
     if (!dataKeys.length || isAvailableProperty(dataKeys)) {
-        return res.send('Incorrect request data.');
+        return res.status(400).send('Incorrect request data.');
     }
     const userId = v4();
     const userWithId: User = {
