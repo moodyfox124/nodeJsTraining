@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "npx babel --delete-dir-on-start -d build --source-maps inline",
-    "task1": "npx nodemon --exec babel-node -- ./homework1/task1.1/index.js",
-    "task2": "npx nodemon --exec babel-node -- ./homework1/task1.2/index.js",
-    "task3": "npx nodemon --exec babel-node -- ./homework2/task2.1/index.ts --extensions \".ts\"",
-    "lint": "./node_modules/.bin/eslint ./homework2/task2.1/**/*.ts --fix"
+    "task1": "npx nodemon --exec babel-node -- ./basics/task1.1/index.js",
+    "task2": "npx nodemon --exec babel-node -- ./basics/task1.2/index.js",
+    "task3": "npx nodemon --exec babel-node -- ./mainProject/task2.1/index.ts --extensions \".ts\"",
+    "lint": "./node_modules/.bin/eslint ./mainProject/task2.1/**/*.ts --fix"
   },
   "repository": {
     "type": "git",
