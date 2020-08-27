@@ -3,7 +3,7 @@ import { createValidator } from 'express-joi-validation';
 import { userSchema } from '../schemas/user';
 
 import {
-    getUser,
+    getUsers,
     createUser,
     getUserById,
     updateUser,
@@ -13,7 +13,7 @@ import {
 const router = express.Router();
 const validator = createValidator();
 
-router.route('/').get(getUser).post(validator.body(userSchema), createUser);
+router.route('/').get(getUsers).post(validator.body(userSchema), createUser);
 
 router
     .route('/:id')

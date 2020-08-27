@@ -54,3 +54,12 @@ To apply eslint rules:
 ```
 npm run lint
 ```
+
+POST and PATCH requests body:
+```
+{
+    login: "any string",
+    password: "string must contain at least one number and one alphabet sumbol",
+    age: integer from 4 to 130 
+}
+```

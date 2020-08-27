@@ -36,7 +36,7 @@ const getAutoSuggestUsers = (
     return result;
 };
 
-const getUser = (req, res) => {
+const getUsers = (req, res) => {
     const query = req.query;
     if (
         !query.limit ||
@@ -116,4 +116,4 @@ const deleteUser = (req, res) => {
     }
 };
 
-export { getUser, createUser, getUserById, updateUser, deleteUser };
+export { getUsers, createUser, getUserById, updateUser, deleteUser };
