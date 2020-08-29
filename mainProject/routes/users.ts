@@ -8,7 +8,7 @@ import {
     getUserById,
     updateUser,
     deleteUser
-} from '../controller/users';
+} from '../controllers/users';
 
 const router = express.Router();
 const validator = createValidator();

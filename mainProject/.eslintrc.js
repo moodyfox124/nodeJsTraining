@@ -80,7 +80,7 @@ module.exports = {
             2,
             {
                 "allowKeywords": true,
-                "allowPattern": "^([a-z]+(_[a-z]+)+)|[A-Z]+|[A-Z]{1}[a-z]+$" 
+                "allowPattern": "^([a-z]+(_[a-z]+)+)|[A-Z]+|[A-Z]{1}[a-z]+$"
             }
         ],
         "eqeqeq": 2,
