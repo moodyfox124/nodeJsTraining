@@ -1,5 +1,5 @@
-import { IUserRequestBody } from "../interfaces/user";
-import UserModel from "../models/user";
+import { IUserRequestBody } from "../helpers/interfaces/user";
+import UserModel from "../database/models/user";
 import { Op } from "sequelize";
 
 class UserService {

@@ -82,3 +82,6 @@ The service should adhere to 3-layer architecture principles (https://softwareon
     |- services 
     |- data-access 
     |- models 
+
+# Homework 4
+# SECOND ENTITY AND MANY-TO-MANY ENTITY RELATIONSHIPS

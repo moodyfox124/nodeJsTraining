@@ -1,4 +1,4 @@
-import UserModel from "../../models/user";
+import UserModel from "../../database/models/user";
 
 UserModel.sync().then(async () => {
   await UserModel.bulkCreate([

@@ -1,6 +1,6 @@
 import { Model, DataTypes, UUIDV4 } from "sequelize";
-import { sequelizeConnection } from "../data-access/connection";
-import { TABLE_NAME } from "../utils/constants";
+import { sequelizeConnection } from "../connection";
+import { USER_TABLE_NAME } from "../../helpers/constants";
 
 class UserModel extends Model {
   id: string;
@@ -37,7 +37,7 @@ UserModel.init(
   },
   {
     sequelize: sequelizeConnection,
-    tableName: TABLE_NAME,
+    tableName: USER_TABLE_NAME,
     modelName: "User",
     schema: "public",
     timestamps: false,
