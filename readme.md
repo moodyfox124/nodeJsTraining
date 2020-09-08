@@ -63,3 +63,22 @@ POST and PATCH requests body:
     age: integer from 4 to 130 
 }
 ```
+
+# Homework 3
+# POSTGRESQL AND LAYERED ARCHITECTURE
+
+## Task 3.1
+
+- Install DB PostgreSQL on your machine or use a free web hosting services for PostgreSQL.
+- Write SQL script which will create Users table in the DB and fill it in with predefined users’ collection.
+- Configure your REST service to work with PostgreSQL.
+  - Use the sequelize package as ORM to work with PostgreSQL. 
+
+## Task 3.2
+
+The service should adhere to 3-layer architecture principles (https://softwareontheroad.com/idealnodejs-project-structure/) and contain the following set of directories:
+
+    |- routers / controllers 
+    |- services 
+    |- data-access 
+    |- models 
