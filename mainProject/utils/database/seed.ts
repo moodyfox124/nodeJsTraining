@@ -1,7 +1,8 @@
-import UserModel from "../../database/models/user";
+import { GroupModel, UserModel } from "../../database/models/index";
+import { sequelizeConnection } from "../../database/connection";
 
-UserModel.sync().then(async () => {
-  await UserModel.bulkCreate([
+sequelizeConnection.sync({ force: true }).then(async () => {
+  UserModel.bulkCreate([
     {
       login: "albert",
       password: "gt123f",
@@ -18,4 +19,16 @@ UserModel.sync().then(async () => {
       age: 50,
     },
   ]);
+
+  GroupModel.bulkCreate([
+    {
+      name: "test1",
+      permissions: ["READ", "SHARE"],
+    },
+    {
+      name: "test2",
+      permissions: ["WRITE", "UPLOAD_FILES"],
+    },
+  ]);
 });
+

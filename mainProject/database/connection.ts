@@ -1,9 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config({ path: "./mainProject/.env" });
 import { Sequelize } from "sequelize";
 
-const dbName = "mainProject";
-const username = "postgres";
-const password = "1234";
-const host = "localhost";
+const dbName = process.env.DBNAME;
+const username = process.env.DBUSERNAME;
+const password = process.env.PASSWORD;
+const host = process.env.HOST;
 const dialect = "postgres";
 
 const sequelizeConnection = new Sequelize(dbName, username, password, {
