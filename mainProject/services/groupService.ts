@@ -1,16 +1,20 @@
 import GroupModel from "../database/models/group";
+import { errorLogger } from "../utils/logger/loggers";
 
 class GroupService {
+  @errorLogger
   getAllGroups() {
     return GroupModel.findAll();
   }
 
+  @errorLogger
   createGroup(groupData) {
     return GroupModel.create({
       ...groupData,
     });
   }
 
+  @errorLogger
   getGroupById(id) {
     return GroupModel.findOne({
       where: {
@@ -19,6 +23,7 @@ class GroupService {
     });
   }
 
+  @errorLogger
   updateGroup(id, groupData) {
     return GroupModel.update(
       {
@@ -32,6 +37,7 @@ class GroupService {
     );
   }
 
+  @errorLogger
   deleteGroup(id) {
     return GroupModel.destroy({
       where: {

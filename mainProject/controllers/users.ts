@@ -1,4 +1,5 @@
 import { userService } from "../services/userService";
+import { logger } from "../utils/logger/loggerInstance";
 
 const getUsers = async (req, res) => {
   const query = req.query;
@@ -10,6 +11,7 @@ const getUsers = async (req, res) => {
 
     res.json(responseData);
   } catch (err) {
+    logger.error(err.message);
     res.status(500).send(err.message);
   }
 };
@@ -21,6 +23,7 @@ const createUser = async (req, res) => {
 
     res.send(`User was created. User received id: ${data.id}`);
   } catch (err) {
+    logger.error(err.message);
     res.status(500).send(err.message);
   }
 };
@@ -38,6 +41,7 @@ const getUserById = async (req, res) => {
 
     res.json(user);
   } catch (err) {
+    logger.error(err.message);
     res.status(500).send(err.message);
   }
 };
@@ -56,6 +60,7 @@ const updateUser = async (req, res) => {
 
     res.send("Record updated.");
   } catch (err) {
+    logger.error(err.message);
     res.status(500).send(err.message);
   }
 };
@@ -73,6 +78,7 @@ const deleteUser = async (req, res) => {
 
     res.send("Record deleted.");
   } catch (err) {
+    logger.error(err.message);
     res.status(500).send(err.message);
   }
 };

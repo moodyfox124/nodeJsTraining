@@ -1,4 +1,5 @@
 import { userGroupService } from "../services/userGroupService";
+import { logger } from "../utils/logger/loggerInstance";
 
 const addUsersToGroup = async (req, res) => {
   const { id } = req.params;
@@ -8,6 +9,7 @@ const addUsersToGroup = async (req, res) => {
 
     res.send(`UserGroup record was added.`);
   } catch (err) {
+    logger.error(err.message);
     res.status(500).send(err.message);
   }
 };

@@ -1,4 +1,5 @@
 import { groupService } from "../services/groupService";
+import { logger } from "../utils/logger/loggerInstance";
 
 const getAllGroups = async (req, res) => {
   try {
@@ -6,6 +7,7 @@ const getAllGroups = async (req, res) => {
 
     res.send(allGroups);
   } catch (err) {
+    logger.error(err.message);
     res.status(500).send(err.message);
   }
 };
@@ -18,6 +20,7 @@ const createGroup = async (req, res) => {
 
     res.send(`Group was created. Group received id: ${groupRecord.id}`);
   } catch (err) {
+    logger.error(err.message);
     res.status(500).send(err.message);
   }
 };
@@ -35,6 +38,7 @@ const getGroupById = async (req, res) => {
 
     res.json(group);
   } catch (err) {
+    logger.error(err.message);
     res.status(500).send(err.message);
   }
 };
@@ -53,6 +57,7 @@ const updateGroup = async (req, res) => {
 
     res.send("Record updated.");
   } catch (err) {
+    logger.error(err.message);
     res.status(500).send(err.message);
   }
 };
@@ -68,6 +73,7 @@ const deleteGroup = async (req, res) => {
     }
     res.send(`Record deleted.`);
   } catch (err) {
+    logger.error(err.message);
     res.status(500).send(err.message);
   }
 };
