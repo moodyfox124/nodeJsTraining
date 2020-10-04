@@ -1,8 +1,9 @@
 import UserGroupModel from "../database/models/userGroup";
 import { sequelizeConnection } from "../database/connection";
-import { errorLogger } from "../utils/logger/loggers";
+import { errorLogger, invokedMethodLogger } from "../utils/logger/loggers";
 
 class UserGroupService {
+  @invokedMethodLogger
   @errorLogger
   async addUsersToGroup(groupId, userIds) {
     await sequelizeConnection.transaction(async (transaction) => {

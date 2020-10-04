@@ -1,12 +1,14 @@
 import GroupModel from "../database/models/group";
-import { errorLogger } from "../utils/logger/loggers";
+import { errorLogger, invokedMethodLogger } from "../utils/logger/loggers";
 
 class GroupService {
+  @invokedMethodLogger
   @errorLogger
   getAllGroups() {
     return GroupModel.findAll();
   }
 
+  @invokedMethodLogger
   @errorLogger
   createGroup(groupData) {
     return GroupModel.create({
@@ -14,6 +16,7 @@ class GroupService {
     });
   }
 
+  @invokedMethodLogger
   @errorLogger
   getGroupById(id) {
     return GroupModel.findOne({
@@ -23,6 +26,7 @@ class GroupService {
     });
   }
 
+  @invokedMethodLogger
   @errorLogger
   updateGroup(id, groupData) {
     return GroupModel.update(
@@ -37,6 +41,7 @@ class GroupService {
     );
   }
 
+  @invokedMethodLogger
   @errorLogger
   deleteGroup(id) {
     return GroupModel.destroy({

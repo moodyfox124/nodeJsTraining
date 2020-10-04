@@ -1,9 +1,10 @@
 import { IUserRequestBody } from "../helpers/interfaces/user";
 import UserModel from "../database/models/user";
 import { Op } from "sequelize";
-import { errorLogger } from "../utils/logger/loggers";
+import { errorLogger, invokedMethodLogger } from "../utils/logger/loggers";
 
 class UserService {
+  @invokedMethodLogger
   @errorLogger
   async getAutoSuggestUsers(login: string, limit: number) {
     return await UserModel.findAll({
@@ -18,6 +19,7 @@ class UserService {
     });
   }
 
+  @invokedMethodLogger
   @errorLogger
   async createUser(userData: IUserRequestBody) {
     return UserModel.create({
@@ -26,6 +28,7 @@ class UserService {
     });
   }
 
+  @invokedMethodLogger
   @errorLogger
   async getUserById(id: string) {
     return UserModel.findOne({
@@ -36,6 +39,7 @@ class UserService {
     });
   }
 
+  @invokedMethodLogger
   @errorLogger
   async updateUser(id: string, userData: IUserRequestBody) {
     return UserModel.update(
@@ -51,6 +55,7 @@ class UserService {
     );
   }
 
+  @invokedMethodLogger
   @errorLogger
   async deleteUser(id: string) {
     return UserModel.update(
