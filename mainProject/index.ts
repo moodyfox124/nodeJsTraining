@@ -11,7 +11,8 @@ process.on("uncaughtException", (err) => {
 });
 
 process.on("unhandledRejection", (err) => {
-  logger.error(err);
+  logger.error(err.message);
+  process.exit(1);
 });
 
 const app = express();
