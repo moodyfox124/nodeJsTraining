@@ -70,6 +70,18 @@ class UserService {
       }
     );
   }
+
+  @invokedMethodLogger
+  @errorLogger
+  async getUser(login: string, password: string) {
+    return UserModel.findOne({
+      where: {
+        login: login,
+        password: password,
+        is_deleted: false,
+      },
+    });
+  }
 }
 
 export const userService = new UserService();

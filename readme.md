@@ -123,3 +123,41 @@ which users are assigned to which group.
 
 Add ```addUsersToGroup(groupId, userIds)``` method which will allow adding users to a certain group.
 Use **transactions** to save records in DB.
+
+# Homework 5
+# LOGGING & ERROR HANDLING
+
+## TASK 5.1 
+Add express middleware which will log which service method has been invoked and which arguments have been passed to it.
+
+## TASK 5.2 
+Add express **middleware** which will log all unhandled errors and return a standard message with **HTTP** code 500 (**Internal Server Error**). 
+**Remark:** Do not modify the status code and the message for other errors like validation errors from the previous task.
+Add error handling to process.on(‘uncaughtException’,...).
+Add **Unhandled promise** rejection listener to log errors.
+
+## TASK 5.3 
+Every method in the controllers should log the errors which should include the following information:
+− method name;
+− arguments which have been passed to the method;
+− error message.
+
+## EVALUATION CRITERIA
+2. Custom logger based on console.log is added instead of Logger package.
+3. Task 5.1 is fulfilled to the full extent; logs are written into the console.
+4. Task 5.2 is fulfilled to the full extent; Winston (https://github.com/winstonjs/winston) package is used for logging.
+5. Task 5.3 is fulfilled to the full extent.
+5*. *Add middleware wrapper functions (or decorators) which will track the methods’ execution time.*
+
+# Homework 6
+# JWT AUTHORIZATION AND CORS
+
+## TASK 6.1
+Add authorization to the already existing REST service
+- Add *login(username, password)* method which should return **JWT** token.
+- Add a **middleware** which will proxy all the requests (except **login**) and check that **HTTP Authorization** header has the correct value of **JWT** token.
+- In case of the **HTTP Authorization** header is absent in the request, the **middleware** should stop further controller method execution and return **HTTP** *401* code (**Unauthorized Error**) and standard error message.
+- In case of **HTTP Authorization** header has invalid **JWT** token in the request, the middleware should return **HTTP** code *403* (**Forbidden Error**) and standard error message.
+
+## TASK 6.2
+Add **CORS middleware** to access service methods from WEB applications hosted on another domains.
